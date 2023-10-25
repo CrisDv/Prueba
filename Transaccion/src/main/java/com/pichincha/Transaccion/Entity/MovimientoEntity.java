@@ -19,6 +19,8 @@ public class MovimientoEntity {
     private int valor;
     private int saldo;
 
+    //private int noCuenta;
+
     @ManyToOne
     @JoinColumn(name = "noCuenta")
     private CuentaEntity cuenta;

@@ -1,16 +1,15 @@
 package com.pichincha.Usuario.Entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
-@Table( name = "Cliente")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "clienteId"), name = "Cliente")
 public class ClienteEntity extends PersonaEntity {
 
 

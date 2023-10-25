@@ -1,19 +1,22 @@
 package com.pichincha.Transaccion.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@JsonPropertyOrder({"noCuenta", "tipoCuenta", "saldo", "estado", "Movimientos"})
 public class CuentaDTO {
-    private int NoCuenta;
+    private Long NoCuenta;
     private String TipoCuenta;
     private int Saldo;
     private boolean estado;
-    private Collection<MovimientoDTO> movimientos;
+    private List<MovimientoDTO> Movimientos;
 }

@@ -14,9 +14,17 @@ public class AdviseController {
     public ResponseEntity<ErrorDTO> HandleExceptions(Exception ex){
         ResponseEntity<ErrorDTO> response = null;
         ErrorDTO errorDTO=new ErrorDTO();
-        errorDTO.setId(HttpStatus.BAD_REQUEST.value());
-        errorDTO.setDescripcion(ex.getMessage());
-response=new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+
+
+        if (ex instanceof NotFoundException){
+            errorDTO.setId(HttpStatus.NOT_FOUND.value());
+            errorDTO.setDescripcion(ex.getMessage());
+            response=new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
+        } else if (ex instanceof BadRequestException) {
+            errorDTO.setId(HttpStatus.BAD_REQUEST.value());
+            errorDTO.setDescripcion(ex.getMessage());
+            response=new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+        }
         return response;
     }
 }

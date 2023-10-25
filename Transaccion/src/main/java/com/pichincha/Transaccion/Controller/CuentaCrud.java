@@ -1,12 +1,21 @@
 package com.pichincha.Transaccion.Controller;
 
+import com.pichincha.Transaccion.DTOs.ClienteDTO;
 import com.pichincha.Transaccion.Entity.CuentaEntity;
 import com.pichincha.Transaccion.Exception.BadRequestException;
+import com.pichincha.Transaccion.Exception.NotFoundException;
+import com.pichincha.Transaccion.Service.ApiService;
 import com.pichincha.Transaccion.Service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 @RestController
 @RequestMapping("/cuentas")
@@ -14,6 +23,9 @@ public class CuentaCrud {
 
     @Autowired
     CuentaService service;
+
+    @Autowired
+    ApiService apiService;
 
     @GetMapping("/obtenerCuenta/{id}")
     public ResponseEntity<CuentaEntity> getCuenta(@PathVariable long id) throws BadRequestException {
@@ -25,14 +37,35 @@ public class CuentaCrud {
         return new ResponseEntity<>(service.crearCuenta(cuenta), HttpStatus.OK);
     }
 
-    @PutMapping("/modificarCuenta")
-    public ResponseEntity<String> modificarCuenta(){
-        return new ResponseEntity<>("asdad", HttpStatus.ACCEPTED);
+    @GetMapping("/reportesUsuario")
+    public ResponseEntity<ClienteDTO> reporteCuentasUsuario(@RequestParam(value = "fechaInicio") String fechaInicio, @RequestParam(value = "fechaFinal") String fechaFinal, @RequestHeader(value = "cliente_Id") long clienteId) throws BadRequestException, NotFoundException {
+
+        return new ResponseEntity<>(service.clienteReporte(stringToDate(fechaInicio), stringToDate(fechaFinal), clienteId), HttpStatus.OK);
+
+    }
+
+    @PatchMapping("/modificarCuenta/{id}")
+    public ResponseEntity<String> modificarCuenta(@RequestParam(value = "id") long cuentaid, @RequestBody CuentaEntity cuenta){
+        service.modificarCuenta(cuentaid, cuenta);
+        return new ResponseEntity<>("Cuenta Modificada", HttpStatus.OK);
     }
 
 
     @DeleteMapping("/eliminarCuenta")
     public ResponseEntity<String> eliminarCuenta(){
         return new ResponseEntity<>("asdad", HttpStatus.ACCEPTED);
+    }
+
+    protected Date stringToDate(String fecha){
+        String pattern="yyyy-MM-dd";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        dateFormat.setLenient(false);
+
+        try {
+            return dateFormat.parse(fecha);
+        } catch (ParseException e) {
+            System.out.println("ParseException: " + e.getMessage());
+            return null;
+        }
     }
 }

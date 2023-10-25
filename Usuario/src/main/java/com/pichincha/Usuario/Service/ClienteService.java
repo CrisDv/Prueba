@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ClienteService {
@@ -13,7 +14,7 @@ public class ClienteService {
     ClienteRepository clienteRepository;
 
     public ClienteEntity crearCliente(ClienteEntity cliente){
-
+        cliente.setIdentificacion(UUID.randomUUID().toString().substring(0, 13));
         return clienteRepository.save(cliente);
     }
 

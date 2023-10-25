@@ -23,7 +23,7 @@ public class MovimientoCrud {
         return new ResponseEntity<>(service.registrarMovimiento(movimiento, movimiento.getCuenta().getNoCuenta()), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/modificarMovimiento")
+    @PatchMapping("/modificarMovimiento")
     public ResponseEntity<String> modificarMovimiento(){
         return new ResponseEntity<>("asdad", HttpStatus.ACCEPTED);
     }
