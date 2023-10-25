@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pichincha</groupId>
 	<artifactId>Transaccion</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>01</version>
 	<name>Transaccion</name>
 	<description>Micro servicio 2 para las cuentas y movimientos del banco</description>
 	<properties>
